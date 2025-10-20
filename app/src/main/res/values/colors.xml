@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#FFFF0000</color>
+    <color name="green">#FF00FF00</color>
+    <color name="blue">#FF0000FF</color>
+    <color name="yellow">#FFFFFF00</color>
+    <color name="cyan">#FF00FFFF</color>
+    <color name="magenta">#FFFF00FF</color>
+    <color name="orange">#FFFFA500</color>
+    <color name="purple">#FF800080</color>
+    <color name="lime">#FF32CD32</color>
+    <color name="pink">#FFFFC0CB</color>
+    <color name="teal">#FF008080</color>
+    <color name="brown">#FFA52A2A</color>
+    <color name="gray">#FF808080</color>
+    <color name="gold">#FFFFD700</color>
+
+    <color name="color_button_1">#FFD50000</color>
+    <color name="color_button_2">#FF00C853</color>
+    <color name="color_button_3">#FF2962FF</color>
+    <color name="color_button_4">#FFFFD600</color>
+    <color name="color_button_5">#FF651FFF</color>
+    <color name="color_button_6">#FF00BFA5</color>
+    <color name="color_button_7">#FF1A237E</color>
+    <color name="color_button_8">#FF607D8B</color>
+    <color name="color_button_9">#FFFF6E40</color>
+    <color name="color_button_10">#FFBF360C</color>
+    <color name="color_button_11">#FFCCFF90</color>
+    <color name="color_button_12">#FFFF8A80</color>
+    <color name="color_button_13">#FF82B1FF</color>
+    <color name="color_button_14">#FFFF6F00</color>
+    <color name="color_button_15">#FF004D40</color>
+    <color name="color_button_16">#FFFFFF8D</color>
+</resources>
