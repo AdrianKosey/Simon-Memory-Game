@@ -1,5 +1,8 @@
 package com.example.simon;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -41,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
     private int turnoUsuario = 0;
     private boolean jugando = false;
     private TextView txt_nivel, txt_turno;
+    private int NUMERO_DE_BOTONES = 16;
+    private TextView txt_level_max;
+    private int maxLevel = 1;
+
+    SharedPreferences archivo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +66,24 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        archivo = this.getSharedPreferences("record", Context.MODE_PRIVATE);
+        if(archivo.contains("record_level")){
+            maxLevel = archivo.getInt("record_level", 1);
+            Log.d("SharedPref", "Record cargado: " + maxLevel);
+        }
+
         btn_start = findViewById(R.id.button_start);
         txt_nivel = findViewById(R.id.level_info);
         txt_turno = findViewById(R.id.turno_info);
+        txt_level_max = findViewById(R.id.level_max);
         contenedorBotones = findViewById(R.id.grid_layout_simon);
-        final int NUMERO_DE_BOTONES = 16;
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) NUMERO_DE_BOTONES = extras.getInt("cantidadBotones");
+        if(NUMERO_DE_BOTONES == 0) NUMERO_DE_BOTONES = 16;
         misBotones = new Button[NUMERO_DE_BOTONES];
         sonidos = new int[NUMERO_DE_BOTONES];
         final TypedArray colors = getResources().obtainTypedArray(R.array.button_colors);
-
+        txt_level_max.setText("Record: " + maxLevel);
         // Calcular cantidad de columnas y filas del grid
         int columnas = (int) Math.ceil(Math.sqrt(NUMERO_DE_BOTONES));
         int filas = (int) Math.ceil((double) NUMERO_DE_BOTONES / columnas);
@@ -79,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             misBotones[i].setTag(String.valueOf(i));
             int buttonColor = colors.getColor(i, 0);
             misBotones[i].setBackgroundColor(buttonColor);
-            sonidos[i] = getResources().getIdentifier("blip_select_" + (i + 1), "raw", getPackageName());
+            sonidos[i] = getResources().getIdentifier("blipselect_" + (i + 1), "raw", getPackageName());
             // Posicion de cada boton
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.height = 0;
@@ -142,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     habilitarBotonesUsuario();
                 }
             }
-        }, 1500);
+        }, 1000);
     }
     private void animarBoton(Button boton, int index) {
         int colorOriginal = ((ColorDrawable) boton.getBackground()).getColor();
@@ -176,6 +194,13 @@ public class MainActivity extends AppCompatActivity {
                 // Secuencia completa correcta, agregamos otro boton
                 Toast.makeText(this, "¡Bien!", Toast.LENGTH_SHORT).show();
                 txt_nivel.setText("Nivel: " + (secuenciaSimon.size() + 1));
+                if(maxLevel < secuenciaSimon.size() + 1){
+                    txt_level_max.setText("Record: " + (secuenciaSimon.size() + 1));
+                    maxLevel = secuenciaSimon.size() + 1;
+                    SharedPreferences.Editor editor = archivo.edit();
+                    editor.putInt("record_level", secuenciaSimon.size() + 1);
+                    editor.apply();
+                }
                 agregarNuevoBotonASecuencia();
                 mostrarSecuencia();
             }
@@ -199,8 +224,9 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this /* MyActivity */, "Ya se encuentra en 'Principal'.", Toast.LENGTH_SHORT);
             toast.show();
         }else if(item.getItemId()==R.id.otro){
-            Toast toast = Toast.makeText(this /* MyActivity */, "En desarrollo.", Toast.LENGTH_SHORT);
-            toast.show();
+            Intent config = new Intent(this, configuracion.class);
+            config.putExtra("cantidadBotones", NUMERO_DE_BOTONES);
+            startActivity(config);
         }
         return super.onOptionsItemSelected(item);
     }

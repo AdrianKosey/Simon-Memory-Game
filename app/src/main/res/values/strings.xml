@@ -3,6 +3,10 @@
     <string name="start_game">¡EMPEZAR!</string>
     <string name="level_text">Nivel: 1</string>
     <string name="Turno_text">Tu turno</string>
+    <string name="level_max">Record: 0</string>
+    <string name="tittle_config">Configuración</string>
+    <string name="config_1">Cantidad de botones.</string>
+    <string name="config_1_indicaciones">MAX: 16 - MIN: 2.</string>
     <array name="button_colors">
         <item>@color/color_button_1</item>
         <item>@color/color_button_2</item>
